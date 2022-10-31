@@ -1,17 +1,11 @@
 package com.zollnersolutions;
 
-/**
- * Hello world!
- */
-public final class App {
-    private App() {
-    }
 
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+import java.io.IOException;
+
+public final class App {
+    public static void main(String[] args) throws IOException {
+        String userQuery = args[0];
+        String openlibQUrl = "http://openlibrary.org/search.json?q=%s";
     }
 }
