@@ -1,32 +1,28 @@
 package com.zollnersolutions;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
-import org.json.JSONObject;
 
 public final class App {
+
+    public static String makeUrl(String searchString) {
+        String queryString;
+        if (searchString.length() > 1) {
+            queryString = searchString.replaceAll(" ", "+");
+        } else {
+            queryString = searchString;
+        }
+        return String.format("http://openlibrary.org/search.json?q=%s", queryString);
+    }
+
+    public static String ddcFromTitle(String searchUrl) throws IOException {
+        JsonNode node = JsonUrlReader.get(searchUrl);
+        return node.findValuesAsText("ddc_sort").toString();
+    }
     public static void main(String[] args) throws IOException {
         //String userQuery = args[0];
         String userQuery = "moby dick";
-        String searchString;
-        if (userQuery.length() > 1) {
-            searchString = userQuery.replaceAll(" ", "+");
-        } else {
-            searchString = userQuery;
-        }
-        String openlibUrl = "http://openlibrary.org/%s";
-        String openlibSearchUrl = String.format("http://openlibrary.org/search.json?q=%s", searchString);
-        String booksUrl = String.format(openlibUrl, "books");
-        String authorsUrl = String.format(openlibUrl, "authors");
-        String worksUrl = String.format(openlibUrl, "works");
-        // use "search.json?q=" for ISBN
-
-        String jstream = JsonUrlReader.stream(openlibSearchUrl);
-        String jstring = JsonUrlReader.getString(openlibSearchUrl);
-        JSONObject jobj = JsonUrlReader.getJson(openlibSearchUrl);
-        JsonNode node = JsonUrlReader.get(openlibSearchUrl);
-
-        System.out.println(jobj);
-
+        String queryUrl = makeUrl(userQuery);
+        String ddc = ddcFromTitle(queryUrl);
+        System.out.println(ddc);
     }
 }

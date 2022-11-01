@@ -1,2 +1,3 @@
-# bookinfo4j
-Java/Maven program/api to get dewey decimal and lcc numbers from a given title or isbn.
+# IN DEVELOPMENT
+## bookinfo4j
+Java/Maven program to search for dewey decimal and lcc number from openlibrary.org
